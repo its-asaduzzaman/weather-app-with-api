@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:weather/screens/location_screen.dart';
 import 'package:weather/services/location.dart';
-import 'package:http/http.dart' as http;
+import 'package:weather/services/networking.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+const apiKey = '7904a67856d292ac96f26e994effae02';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -8,41 +12,38 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  late double latitude;
+  late double longitude;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
-  void getLocation() async {
+  void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-    print(location.longitude);
-    print(location.latitude);
-  }
+    latitude = location.latitude;
+    longitude = location.longitude;
+    NetworkHelper networkHelper = NetworkHelper(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric');
 
-  void getData() async {
-    http.Response response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=7904a67856d292ac96f26e994effae02'));
-    if (response.statusCode == 200) {
-      String data = response.body;
-      print(data);
-    } else {
-      print(response.statusCode);
-    }
+    var weatherData = await networkHelper.getData();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen( locationWeather: weatherData, );
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // getLocation();
-          },
-          child: Text('Get Location'),
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100.0,
         ),
       ),
     );
