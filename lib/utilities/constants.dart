@@ -18,3 +18,6 @@ const kButtonTextStyle = TextStyle(
 const kConditionTextStyle = TextStyle(
   fontSize: 100.0,
 );
+
+const kWeatherOtherInfoStyle = TextStyle(
+    fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.white70);
