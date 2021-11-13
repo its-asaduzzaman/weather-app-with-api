@@ -7,6 +7,8 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  late String cityName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,29 +21,45 @@ class _CityScreenState extends State<CityScreen> {
         ),
         constraints: BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
+          child: Column( mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Align(
+
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: TextField(
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  decoration: kTextFieldInputDecoration,
+                  onChanged: (value) {
+                    cityName = value;
+                  },
+                ),
+              ),
+              Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Align(
                 alignment: Alignment.topLeft,
-                child: FlatButton(
-                  onPressed: () {},
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Icon(
-                    Icons.arrow_back_ios,
+                    Icons.arrow_back,
                     size: 50.0,
+                    color: Colors.pink,
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: null,
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: Text(
-                  'Get Weather',
-                  style: kButtonTextStyle,
-                ),
-              ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, cityName);
+                  },
+                  child: Text(
+                    'Get Weather',
+                    style: kButtonTextStyle,
+                  ),
+                ),],),
+
             ],
           ),
         ),

@@ -13,6 +13,7 @@ const kMessageTextStyle = TextStyle(
 const kButtonTextStyle = TextStyle(
   fontSize: 30.0,
   fontFamily: 'Spartan MB',
+  color: Colors.pink,
 );
 
 const kConditionTextStyle = TextStyle(
@@ -21,3 +22,22 @@ const kConditionTextStyle = TextStyle(
 
 const kWeatherOtherInfoStyle = TextStyle(
     fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.white70);
+
+const kTextFieldInputDecoration = InputDecoration(
+  filled: true,
+  fillColor: Colors.white,
+  icon: Icon(
+    Icons.location_city,
+    color: Colors.pink,
+  ),
+  hintText: 'Enter City Name',
+  hintStyle: TextStyle(
+    color: Colors.grey,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(10.0),
+    ),
+    borderSide: BorderSide.none,
+  ),
+);
