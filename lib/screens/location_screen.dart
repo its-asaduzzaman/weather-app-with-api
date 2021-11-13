@@ -26,6 +26,7 @@ class _LocationScreenState extends State<LocationScreen> {
   late String description;
   late double tempMin;
   late double tempMax;
+  late String weatherMainName;
 
   @override
   void initState() {
@@ -34,21 +35,24 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic weatherData) {
-    double temp = weatherData['main']['temp'];
-    temperature = temp.ceil();
-    weatherMessage = weather.getMessage(temperature);
-    var condition = weatherData['weather'][0]['id'];
-    weatherIcon = weather.getWeatherIcon(condition);
-    countryName = weatherData['sys']['country'];
-    wind = weatherData['wind']['speed'];
-    humidity = weatherData['main']['humidity'];
-    pressure = weatherData['main']['pressure'];
-    cityName = weatherData['name'];
-    visibility = weatherData['visibility'];
-    feelLike = weatherData['main']['feels_like'];
-    description = weatherData['weather'][0]['description'];
-    tempMax = weatherData['main']['temp_min'];
-    tempMin = weatherData['main']['temp_max'];
+    setState(() {
+      double temp = weatherData['main']['temp'];
+      temperature = temp.ceil();
+      weatherMessage = weather.getMessage(26);
+      var condition = weatherData['weather'][0]['id'];
+      weatherIcon = weather.getWeatherIcon(condition);
+      countryName = weatherData['sys']['country'];
+      wind = weatherData['wind']['speed'];
+      humidity = weatherData['main']['humidity'];
+      pressure = weatherData['main']['pressure'];
+      cityName = weatherData['name'];
+      visibility = weatherData['visibility'];
+      feelLike = weatherData['main']['feels_like'];
+      description = weatherData['weather'][0]['description'];
+      tempMax = weatherData['main']['temp_min'];
+      tempMin = weatherData['main']['temp_max'];
+      weatherMainName = weatherData['weather'][0]['main'];
+    });
   }
 
   @override
@@ -69,27 +73,6 @@ class _LocationScreenState extends State<LocationScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.near_me,
-                      size: 50.0,
-                      color: Colors.pink,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.location_city,
-                      size: 50.0,
-                      color: Colors.pink,
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 15.5,
               ),
@@ -110,7 +93,6 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: <Widget>[
                     Text(
                       '${(temperature)}°C',
-
                       style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.w800,
@@ -133,12 +115,12 @@ class _LocationScreenState extends State<LocationScreen> {
                 height: 50.5,
               ),
               Text(
-                "Feel like ${(feelLike).ceil()}°C, $description and \n $weatherMessage.",
+                "Feel like ${(feelLike).ceil()}°C, $description and \n $weatherMessage in $cityName .",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
+                  // fontWeight: FontWeight.w600,
                   fontSize: 16.0,
-                  color: Colors.white70,
+                  color: Colors.white,
                 ),
               ),
               SizedBox(
@@ -150,7 +132,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   borderRadius: BorderRadius.circular(50.0),
                   color: Colors.black38,
                 ),
-                padding: EdgeInsets.only(top: 20.0, left: 45.0,right: 35.0),
+                padding: EdgeInsets.only(top: 20.0, left: 45.0, right: 35.0),
                 width: double.infinity,
                 height: 110.0,
                 child: Column(
@@ -163,10 +145,8 @@ class _LocationScreenState extends State<LocationScreen> {
                           "Max: ${((tempMax)).ceil()}°C",
                           style: kWeatherOtherInfoStyle,
                         ),
-
                         Text("Min: ${((tempMin)).round()}°C ",
                             textAlign: TextAlign.left,
-
                             style: kWeatherOtherInfoStyle),
                       ],
                     ),
@@ -180,7 +160,6 @@ class _LocationScreenState extends State<LocationScreen> {
                           "Wind: ${wind}m/s ",
                           style: kWeatherOtherInfoStyle,
                         ),
-
                         Text(
                           "Pressure: ${pressure}hPa ",
                           textAlign: TextAlign.start,
@@ -198,13 +177,67 @@ class _LocationScreenState extends State<LocationScreen> {
                           "Humidity: $humidity% ",
                           style: kWeatherOtherInfoStyle,
                         ),
-
                         Text(
                             "Visibility: ${((visibility) / 1000)..toStringAsFixed(2)}Km ",
                             textAlign: TextAlign.right,
-
                             style: kWeatherOtherInfoStyle),
                       ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        weatherIcon,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 150.0,
+                            color: Colors.white.withOpacity(.6)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        weatherMainName,
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.near_me,
+                        size: 50.0,
+                        color: Colors.pink,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.location_city,
+                        size: 50.0,
+                        color: Colors.pink,
+                      ),
                     ),
                   ],
                 ),

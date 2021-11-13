@@ -26,7 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     NetworkHelper networkHelper = NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=${(location.latitude).toStringAsPrecision(3)}&lon=${(location.longitude.toStringAsPrecision(3))}&appid=$apiKey&units=metric');
-         print('${(location.latitude).toStringAsPrecision(4)}  \nlon=${(location.longitude.toStringAsPrecision(4))}') ;
+         // print('${(location.latitude).toStringAsPrecision(4)}  \nlon=${(location.longitude.toStringAsPrecision(4))}') ;
     var weatherData = await networkHelper.getData();
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
