@@ -18,7 +18,7 @@ class _LocationScreenState extends State<LocationScreen> {
   late int temperature;
   late String weatherIcon;
   late String countryName;
-  late double wind;
+  late var wind;
   late String weatherMessage;
   late int humidity;
   late int pressure;
