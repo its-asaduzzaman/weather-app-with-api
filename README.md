@@ -6,4 +6,4 @@ A new Flutter project.
 
 <img src="images/screen1.png" alt="drawing" width="200"/>
 <img src="images/screen2.png" alt="drawing" width="200"/>
-<img src="images/screen1.png" alt="drawing" width="200"/>
+<img src="images/screen3.png" alt="drawing" width="200"/>
